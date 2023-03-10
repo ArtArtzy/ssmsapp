@@ -83,7 +83,6 @@ export default {
         this.showErrorDia = true;
         return;
       }
-      console.log(res.data);
       this.projectNameShow = res.data[0].name;
       this.$q.localStorage.set("projectInfo", res.data[0]);
 

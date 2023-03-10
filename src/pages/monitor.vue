@@ -16,8 +16,9 @@
 
 <script>
 import leftMenu from "../components/leftmenu.vue";
+import listSensor from "../components/listsensoroverall.vue";
 export default {
-  components: { leftMenu },
+  components: { leftMenu, listSensor },
 };
 </script>
 

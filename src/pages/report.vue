@@ -10,7 +10,7 @@
     <!-- Tablet -->
     <div class="lt-lg gt-xs">Project for Talbet</div>
     <!-- Moblile -->
-    <div class="lt-sm"></div>
+    <div class="lt-sm">Report for mobile</div>
   </div>
 </template>
 

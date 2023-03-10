@@ -8,7 +8,9 @@
           <div class="title q-px-md q-pt-md">
             <b>{{ projectInfo.name }}</b>
           </div>
+
           <div class="q-px-md">{{ projectInfo.address }}</div>
+          <div class="q-px-md"><list-sensor :data="projectInfo" /></div>
         </div>
       </div>
     </div>
@@ -21,8 +23,9 @@
 
 <script>
 import leftMenu from "../components/leftmenu.vue";
+import listSensor from "../components/listsensoroverall.vue";
 export default {
-  components: { leftMenu },
+  components: { leftMenu, listSensor },
   data() {
     return {
       projectInfo: [],
@@ -31,7 +34,7 @@ export default {
   methods: {
     checkLocalStorage() {
       this.projectInfo = this.$q.localStorage.getItem("projectInfo");
-      console.log(this.projectInfo);
+      // console.log(this.projectInfo);
     },
   },
   mounted() {
