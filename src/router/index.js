@@ -32,8 +32,8 @@ Vue.mixin({
   data() {
     return {
       serverPath: "http://localhost:8080/",
-      // apiPath: "http://localhost/ssms_app_api/"
-      apiPath: "http://192.168.1.120/ssms_app_api/"
+      // apiPath: "http://localhost/ssms_bo_api/"
+      apiPath: "http://192.168.1.120/ssms_bo_api/"
     }
   },
   methods: {

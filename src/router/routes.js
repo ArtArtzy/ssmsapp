@@ -23,6 +23,11 @@ const routes = [
   },
   
   {
+    path: '/settime',
+    component: () => import('pages/settime.vue'),
+    name: 'settime' 
+  },
+  {
     path: '/app/:project?',
     component: () => import('pages/loading.vue'),
     name: 'app' 
