@@ -5,11 +5,19 @@
       <div class="row">
         <div><left-menu menuItem="1" /></div>
         <div class="col rightPanelPC">
-          <div class="title q-px-md q-pt-md">
-            <b>{{ projectInfo.name }}</b>
+          <div class="row justify-between">
+            <div>
+              <div class="title q-px-md q-pt-md">
+                <b>{{ projectInfo.name }}</b>
+              </div>
+
+              <div class="q-px-md">{{ projectInfo.address }}</div>
+            </div>
+            <div>
+              <q-btn label="time" @click="openTimeDia()" />
+            </div>
           </div>
 
-          <div class="q-px-md">{{ projectInfo.address }}</div>
           <div class="q-px-md"><list-sensor :data="projectInfo" /></div>
           <!-- picture gallary -->
           <div class="row q-pa-md">
@@ -90,23 +98,29 @@
       </div>
       <div class="fixBt"><bt-menu menuItem="1" /></div>
     </div>
+    <set-time :showDia="showTime" />
   </div>
 </template>
 
 <script>
 import axios from "axios";
+import setTime from "../components/settime.vue";
 import leftMenu from "../components/leftmenu.vue";
 import listSensor from "../components/listsensor.vue";
 import btMenu from "../components/btmenu.vue";
 export default {
-  components: { leftMenu, listSensor, btMenu },
+  components: { leftMenu, listSensor, btMenu, setTime },
   data() {
     return {
       projectInfo: [],
       pictureList: [],
+      showTime: false,
     };
   },
   methods: {
+    openTimeDia() {
+      this.showTime = true;
+    },
     getImage(id) {
       return this.apiPath + "image/" + id + ".jpg";
     },
