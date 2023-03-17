@@ -13,9 +13,6 @@
 
               <div class="q-px-md">{{ projectInfo.address }}</div>
             </div>
-            <div>
-              <q-btn label="time" @click="openTimeDia()" />
-            </div>
           </div>
 
           <div class="q-px-md"><list-sensor :data="projectInfo" /></div>
@@ -104,23 +101,19 @@
 
 <script>
 import axios from "axios";
-import setTime from "../components/settime.vue";
+
 import leftMenu from "../components/leftmenu.vue";
 import listSensor from "../components/listsensor.vue";
 import btMenu from "../components/btmenu.vue";
 export default {
-  components: { leftMenu, listSensor, btMenu, setTime },
+  components: { leftMenu, listSensor, btMenu },
   data() {
     return {
       projectInfo: [],
       pictureList: [],
-      showTime: false,
     };
   },
   methods: {
-    openTimeDia() {
-      this.showTime = true;
-    },
     getImage(id) {
       return this.apiPath + "image/" + id + ".jpg";
     },

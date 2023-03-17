@@ -5,11 +5,19 @@
       <div class="row">
         <div><left-menu menuItem="2" /></div>
         <div class="col rightPanelPC">
-          <div class="title q-px-md q-pt-md">
-            <b>{{ projectInfo.name }}</b>
+          <div class="row justify-between">
+            <div>
+              <div class="title q-px-md q-pt-md">
+                <b>{{ projectInfo.name }}</b>
+              </div>
+
+              <div class="q-px-md">{{ projectInfo.address }}</div>
+            </div>
+            <div>
+              <set-time :projectInfo="projectInfo" @setTime="setTime" />
+            </div>
           </div>
 
-          <div class="q-px-md">{{ projectInfo.address }}</div>
           <div class="q-px-md"><list-sensor :data="projectInfo" /></div>
         </div>
       </div>
@@ -40,17 +48,21 @@
 </template>
 
 <script>
+import setTime from "../components/settime.vue";
 import leftMenu from "../components/leftmenu.vue";
 import listSensor from "../components/listsensoroverall";
 import btMenu from "../components/btmenu.vue";
 export default {
-  components: { leftMenu, listSensor, btMenu },
+  components: { leftMenu, listSensor, btMenu, setTime },
   data() {
     return {
       projectInfo: [],
     };
   },
   methods: {
+    setTime(data) {
+      console.log(data);
+    },
     checkLocalStorage() {
       this.projectInfo = this.$q.localStorage.getItem("projectInfo");
       if (this.projectInfo == null) {
