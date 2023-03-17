@@ -134,7 +134,7 @@ export default {
       this.showDia = false;
     },
     async applyBtn() {
-      if (this.selectedTime == "current") {
+      if (this.selectedTime == "duration") {
         let currentDate = new Date();
         this.showTime2 =
           currentDate.getDate() +
@@ -201,7 +201,7 @@ export default {
         };
         this.$emit("setTime", sendTime);
         this.closeDialog();
-      } else {
+      } else if (this.selectedTime == "Specific") {
         if (this.startDate.length == 0 || this.startTime.length == 0) {
           this.redNotify("please input start date and time");
           return;
@@ -215,6 +215,13 @@ export default {
         let sendTime = {
           showTime1: this.showTime1,
           showTime2: this.showTime2,
+        };
+        this.$emit("setTime", sendTime);
+        this.closeDialog();
+      } else {
+        let sendTime = {
+          showTime1: "Current time",
+          showTime2: "",
         };
         this.$emit("setTime", sendTime);
         this.closeDialog();
