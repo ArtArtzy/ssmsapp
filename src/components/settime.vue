@@ -3,10 +3,14 @@
     <!-- Controll btn -->
     <div class="mainBtn row shadow-3 cursor-pointer" @click="showDiaSetTime()">
       <div class="icon"><q-icon name="fa-regular fa-clock" /></div>
-      <div class="col">
+      <div class="col" v-show="showTime1 != 'Current time'">
         <div>{{ showTime1 }}</div>
         <div>{{ showTime2 }}</div>
       </div>
+      <div v-show="showTime1 == 'Current time'" class="currentText col">
+        Current time
+      </div>
+
       <div class="icon2"><q-icon name="fa-solid fa-caret-down" /></div>
     </div>
 
@@ -16,16 +20,25 @@
     <q-dialog v-model="showDia" persistent>
       <q-card class="cardSize"
         ><div class="setDisplay"><B>Set Display Time Interval</B></div>
-        <div>
+        <div class="q-pt-lg">
           <q-radio
             v-model="selectedTime"
             val="current"
-            label="Current Time"
+            label="Current time"
+            class="fontRadio"
+          />
+          <div class="line"></div>
+        </div>
+
+        <div>
+          <q-radio
+            v-model="selectedTime"
+            val="duration"
+            label="Duration"
             class="fontRadio"
           />
         </div>
-        <div class="row">
-          <div class="col-6 duration">Duration</div>
+        <div>
           <div>
             <q-select
               outlined
@@ -41,7 +54,7 @@
           <q-radio
             v-model="selectedTime"
             val="specific"
-            label="Specific Time"
+            label="Specific time"
             class="fontRadio"
           />
         </div>
@@ -201,7 +214,7 @@ export default {
         };
         this.$emit("setTime", sendTime);
         this.closeDialog();
-      } else if (this.selectedTime == "Specific") {
+      } else if (this.selectedTime == "specific") {
         if (this.startDate.length == 0 || this.startTime.length == 0) {
           this.redNotify("please input start date and time");
           return;
@@ -219,6 +232,8 @@ export default {
         this.$emit("setTime", sendTime);
         this.closeDialog();
       } else {
+        this.showTime1 = "Current time";
+        this.showTime2 = "";
         let sendTime = {
           showTime1: "Current time",
           showTime2: "",
@@ -281,7 +296,7 @@ export default {
   padding-left: 15px;
 }
 .cardSize {
-  height: 430px;
+  height: 510px;
   width: 100%;
   max-width: 340px;
 }
@@ -295,6 +310,7 @@ export default {
 }
 .selectBox {
   width: 140px;
+  margin-left: 35px;
 }
 .duration {
   padding-left: 40px;
@@ -305,7 +321,7 @@ export default {
   height: 0.5px;
   background-color: black;
   margin-top: 15px;
-  margin-left: 15px;
+  margin-left: 25px;
 }
 .inputBox {
   width: 135px;
@@ -340,5 +356,8 @@ export default {
   height: 45px;
   margin-top: 20px;
   margin-right: 15px;
+}
+.currentText {
+  padding-top: 10px;
 }
 </style>
