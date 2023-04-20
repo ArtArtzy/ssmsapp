@@ -2,9 +2,11 @@
   <div>
     <div class="row gt-xs">
       <div
-        class="box shadow-2 q-mt-md"
+        class="box shadow-2 q-mt-md cursor-pointer"
         v-for="(item, index) in sensorData"
+        :class="{ selectedBox: selectedID == item.name }"
         :key="index"
+        @click="chooseSensor(item)"
       >
         <div class="row">
           <div class="col-4 iconShow">
@@ -18,7 +20,13 @@
       </div>
     </div>
     <div class="lt-sm">
-      <div><q-select v-model="selectedMode" :options="sensorDataMobile" /></div>
+      <div>
+        <q-select
+          v-model="selectedMode"
+          :options="sensorDataMobile"
+          @input="chooseSensorSelect()"
+        />
+      </div>
     </div>
   </div>
 </template>
@@ -31,10 +39,28 @@ export default {
     return {
       sensorData: [],
       sensorDataMobile: [],
-      selectedMode: "overall",
+      selectedMode: "Overall",
+      selectedID: 0,
     };
   },
   methods: {
+    chooseSensorSelect() {
+      let sendData;
+
+      if (this.selectedMode != "Overall") {
+        sendData = this.sensorData.filter(
+          (x) => x.name == this.selectedMode
+        )[0];
+      } else {
+        sendData = this.sensorData.filter((x) => x.sensortype == "Overall")[0];
+      }
+
+      this.$emit("selectedSensor", sendData);
+    },
+    chooseSensor(item) {
+      this.selectedID = item.name;
+      this.$emit("selectedSensor", item);
+    },
     imgIcone(index) {
       let numIcon = index + 1;
       let fileImg = "s" + numIcon + ".svg";
@@ -86,23 +112,31 @@ export default {
         sensortype: "Overall",
         icon: 0,
       };
+      this.selectedID = tempOverall.name;
+      this.$emit("selectedSensor", tempOverall);
       sensorTemp.unshift(tempOverall);
       this.sensorData = sensorTemp;
       this.sensorDataMobile = [];
       this.sensorData.forEach((x, index) => {
-        let temp;
+        // let temp;
         if (index == 0) {
-          temp = {
-            value: x.id,
-            label: x.sensortype,
-          };
+          this.sensorDataMobile.push(x.sensortype);
         } else {
-          temp = {
-            value: x.id,
-            label: x.name,
-          };
+          this.sensorDataMobile.push(x.name);
         }
-        this.sensorDataMobile.push(temp);
+        // if (index == 0) {
+
+        //   temp = {
+        //     value: x.id,
+        //     label: x.sensortype,
+        //   };
+        // } else {
+        //   temp = {
+        //     value: x.id,
+        //     label: x.name,
+        //   };
+        // }
+        // this.sensorDataMobile.push(temp);
       });
     },
   },
@@ -115,6 +149,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.selectedBox {
+  border: 2px solid #1c3a7d;
+}
 .box {
   width: 170px;
   height: 60px;

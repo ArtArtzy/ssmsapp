@@ -20,14 +20,14 @@
         <div class="label">Monitor</div>
       </div>
       <!-- Report -->
-      <div
+      <!-- <div
         class="subMenu cursor-pointer"
         :class="{ selectedMenu: menuItem == 3 }"
         @click="goToReport()"
       >
         <div><q-icon name="fa-regular fa-file-lines" class="icon" /></div>
         <div class="label">Report</div>
-      </div>
+      </div> -->
     </div>
   </div>
 </template>

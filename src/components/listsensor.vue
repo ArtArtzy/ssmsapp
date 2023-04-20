@@ -67,7 +67,7 @@ export default {
 
 <style lang="scss" scoped>
 .box {
-  width: 170px;
+  width: 150px;
   height: 60px;
   margin-right: 20px;
   background-color: white;

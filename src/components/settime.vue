@@ -1,14 +1,24 @@
 <template>
   <div>
     <!-- Controll btn -->
-    <div class="mainBtn row shadow-3 cursor-pointer" @click="showDiaSetTime()">
+    <div
+      class="mainBtn row shadow-3 cursor-pointer"
+      @click="showDiaSetTime()"
+      v-if="!disable"
+    >
       <div class="icon"><q-icon name="fa-regular fa-clock" /></div>
-      <div class="col" v-show="showTime1 != 'Current time'">
+      <div class="col">
         <div>{{ showTime1 }}</div>
         <div>{{ showTime2 }}</div>
       </div>
-      <div v-show="showTime1 == 'Current time'" class="currentText col">
-        Current time
+
+      <div class="icon2"><q-icon name="fa-solid fa-caret-down" /></div>
+    </div>
+    <div class="mainBtnDisable row shadow-3" v-else>
+      <div class="icon"><q-icon name="fa-regular fa-clock" /></div>
+      <div class="col">
+        <div>{{ showTime1 }}</div>
+        <div>{{ showTime2 }}</div>
       </div>
 
       <div class="icon2"><q-icon name="fa-solid fa-caret-down" /></div>
@@ -20,15 +30,6 @@
     <q-dialog v-model="showDia" persistent>
       <q-card class="cardSize"
         ><div class="setDisplay"><B>Set Display Time Interval</B></div>
-        <div class="q-pt-lg">
-          <q-radio
-            v-model="selectedTime"
-            val="current"
-            label="Current time"
-            class="fontRadio"
-          />
-          <div class="line"></div>
-        </div>
 
         <div>
           <q-radio
@@ -123,14 +124,14 @@
 <script>
 import axios from "axios";
 export default {
-  props: ["projectInfo"],
+  props: ["projectInfo", "disable"],
   data() {
     return {
       showDia: false,
       showTime1: "",
       showTime2: "",
       showDialog: false,
-      selectedTime: "current",
+      selectedTime: "duration",
       duration: "1 day",
       selectedDuration: ["1 day", "7 days", "15 days", "30 days"],
       startDate: "",
@@ -152,7 +153,7 @@ export default {
         this.showTime2 =
           currentDate.getDate() +
           "/" +
-          currentDate.getMonth() +
+          (currentDate.getMonth() + 1) +
           "/" +
           currentDate.getFullYear() +
           " " +
@@ -164,7 +165,7 @@ export default {
           this.showTime1 =
             currentDate.getDate() +
             "/" +
-            currentDate.getMonth() +
+            (currentDate.getMonth() + 1) +
             "/" +
             currentDate.getFullYear() +
             " " +
@@ -176,7 +177,7 @@ export default {
           this.showTime1 =
             currentDate.getDate() +
             "/" +
-            currentDate.getMonth() +
+            (currentDate.getMonth() + 1) +
             "/" +
             currentDate.getFullYear() +
             " " +
@@ -188,7 +189,7 @@ export default {
           this.showTime1 =
             currentDate.getDate() +
             "/" +
-            currentDate.getMonth() +
+            (currentDate.getMonth() + 1) +
             "/" +
             currentDate.getFullYear() +
             " " +
@@ -200,7 +201,7 @@ export default {
           this.showTime1 =
             currentDate.getDate() +
             "/" +
-            currentDate.getMonth() +
+            (currentDate.getMonth() + 1) +
             "/" +
             currentDate.getFullYear() +
             " " +
@@ -223,49 +224,24 @@ export default {
           this.redNotify("Please input end date");
           return;
         }
-        this.showTime1 = this.startDate + " " + this.startTime;
-        this.showTime2 = this.endDate + " " + this.endTime;
+
+        let startDateTemp = this.startDate.split("-");
+        let startDateShow =
+          startDateTemp[2] + "/" + startDateTemp[1] + "/" + startDateTemp[0];
+        let endDateTemp = this.endDate.split("-");
+        let endDateShow =
+          endDateTemp[2] + "/" + endDateTemp[1] + "/" + endDateTemp[0];
+        this.showTime1 = startDateShow + " " + this.startTime;
+        this.showTime2 = endDateShow + " " + this.endTime;
         let sendTime = {
           showTime1: this.showTime1,
           showTime2: this.showTime2,
         };
         this.$emit("setTime", sendTime);
         this.closeDialog();
-      } else {
-        this.showTime1 = "Current time";
-        this.showTime2 = "";
-        let sendTime = {
-          showTime1: "Current time",
-          showTime2: "",
-        };
-        this.$emit("setTime", sendTime);
-        this.closeDialog();
       }
     },
-    async initTime() {
-      let currentDate = new Date();
-      this.showTime2 =
-        currentDate.getDate() +
-        "/" +
-        currentDate.getMonth() +
-        "/" +
-        currentDate.getFullYear() +
-        " " +
-        this.addZero(currentDate.getHours()) +
-        ":" +
-        this.addZero(currentDate.getMinutes());
-      currentDate.setDate(currentDate.getDate() - 1);
-      this.showTime1 =
-        currentDate.getDate() +
-        "/" +
-        currentDate.getMonth() +
-        "/" +
-        currentDate.getFullYear() +
-        " " +
-        this.addZero(currentDate.getHours()) +
-        ":" +
-        this.addZero(currentDate.getMinutes());
-    },
+
     addZero(num) {
       if (Number(num) < 10) {
         return "0" + num;
@@ -276,7 +252,7 @@ export default {
   },
   mounted() {
     setTimeout(() => {
-      this.initTime();
+      this.applyBtn();
     }, 300);
   },
 };
@@ -296,7 +272,7 @@ export default {
   padding-left: 15px;
 }
 .cardSize {
-  height: 510px;
+  height: 420px;
   width: 100%;
   max-width: 340px;
 }
@@ -352,6 +328,13 @@ export default {
 }
 .mainBtn {
   background-color: white;
+  width: 210px;
+  height: 45px;
+  margin-top: 20px;
+  margin-right: 15px;
+}
+.mainBtnDisable {
+  background-color: #c4c4c4;
   width: 210px;
   height: 45px;
   margin-top: 20px;

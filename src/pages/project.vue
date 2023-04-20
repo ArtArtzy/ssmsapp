@@ -63,7 +63,9 @@
             </div>
           </div>
         </div>
+        <div style="height: 100px"></div>
       </div>
+
       <div class="fixBt"><bt-menu menuItem="1" /></div>
     </div>
     <!-- Moblile -->
@@ -92,10 +94,10 @@
             </div>
           </div>
         </div>
+        <div style="height: 100px"></div>
+        <div class="fixBt"><bt-menu menuItem="1" /></div>
       </div>
-      <div class="fixBt"><bt-menu menuItem="1" /></div>
     </div>
-    <set-time :showDia="showTime" />
   </div>
 </template>
 

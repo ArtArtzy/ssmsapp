@@ -3,7 +3,7 @@
     <div class="btMain row">
       <!-- project -->
       <div
-        class="subMenu cursor-pointer col-4"
+        class="subMenu cursor-pointer col-6"
         :class="{ selectedMenu: menuItem == 1 }"
         @click="goToProject()"
       >
@@ -12,7 +12,7 @@
       </div>
       <!-- Monitor -->
       <div
-        class="subMenu cursor-pointer col-4"
+        class="subMenu cursor-pointer col-6"
         :class="{ selectedMenu: menuItem == 2 }"
         @click="goToMonitor()"
       >
@@ -20,14 +20,14 @@
         <div class="label">Monitor</div>
       </div>
       <!-- Report -->
-      <div
+      <!-- <div
         class="subMenu cursor-pointer col-4"
         :class="{ selectedMenu: menuItem == 3 }"
         @click="goToReport()"
       >
         <div><q-icon name="fa-regular fa-file-lines" class="icon" /></div>
         <div class="label">Report</div>
-      </div>
+      </div> -->
     </div>
   </div>
 </template>
@@ -60,6 +60,7 @@ export default {
   width: 100%;
   height: 60px;
   background-color: #457bef;
+  overflow: hidden;
 }
 .subMenu {
   border-right: 1px solid #7da5f9;
